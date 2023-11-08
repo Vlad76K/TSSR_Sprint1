@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Объявления</title>
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
+        <!-- //Meta tag Keywords -->
+        <title>Clack Website Template</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- //Meta tag Keywords -->
+        <!-- Custom-Files -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <!-- Bootstrap-Core-CSS -->
+        <!--/ Style-CSS -->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" media="all">
+        <!--// Style-CSS -->
+        <!-- font-awesome-icons -->
+        <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+        <!-- //font-awesome-icons -->
+        <!-- /Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+        <!-- //Fonts -->
+    </head>
+
+    <body>
+        <div id="page" class="page"><!-- mian-content -->
+            <div class="main-banner bg bg1" id="home" style="background-color: rgba(0, 0, 0, 0); margin-top: 0px; background-image: url(&quot;../media/images/logo.png&quot;);">
+                <!-- header -->
+                <header class="header">
+                    <div class="container-fluid px-lg-5">
+                        <!-- Responsive navbar-->
+                        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                            <div class="container">
+                                <a class="navbar-brand" href="#" style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;">Общероссийcкая общественная организация "Федерация спортивного туризма России"</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="../posts/">Главная</a></li>
+                                        <li class="nav-item"><a class="nav-link active" aria-current="page" style = "color: Crimson" href="../sign/signup/">Рег-ция/Вход</a></li>
+                                        <li class="nav-item"><a class="nav-link active" aria-current="page" style = "color: SpringGreen">Польз: {{ user.username }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        <!-- //nav -->
+                    </div>
+            </header>
+            <!-- //header -->
+            <!--// banner-inner -->
+        </div>
+
+        <!-- banner -->
+        <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem; background-color: rgb(47, 79, 79);">
+            {% csrf_token %}
+            <div class="container-fluid py-md-3">
+                <div class="row">
+                    <div class="side-bar col-lg-3">
+                        {% block search %}
+                        {% endblock search %}
+                    </div>
+                    <!-- //product left -->
+                    <!-- product right -->
+                    <div class="left-ads-display col-lg-9">
+                        <div class="row">
+                            <div class="col-md-12 product-men">
+                                <div class="product-shoe-info editContent text-center mt-lg-4" >
+                                    {% block content %}
+                                        {{ flatpage.content }}
+                                    {% endblock content %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- //contact -->
+        <!-- footer -->
+        <footer class="editContent" style="background-color: rgb(0, 0, 0);">
+            <div class="container">
+                <div class="row footer-top">
+                    <div class="col-lg-4 footer-grid_section_w3layouts">
+                        <h2 class="logo-2 mb-lg-4 mb-3">
+                            <a href="index.html" class="editContent">
+                                <span class="fa" aria-hidden="true" >
+                                    Общероссийcкая общественная организация
+                                    "Федерация спортивного туризма России"
+                                </span>
+                            </a>
+                        </h2>
+                        <p class="editContent" style="color: LemonChiffon">
+                            Проект в рамках обучения SkillFactory.
+                            Школа для программистов и людей, которые хотят развиваться в сфере IT.
+                        </p>
+                        <ul class="w3layouts_social_list media-soc list-unstyled">
+                            <li>
+                                <a href="#" class="w3pvt_facebook editContent" >
+                                    <span class="fa fa-facebook-f" ></span>
+                                </a>
+<!--                            </li>-->
+<!--                            <li>-->
+                                <a href="#" class="w3pvt_twitter editContent" >
+                                    <span class="fa fa-twitter" ></span>
+                                </a>
+<!--                            </li>-->
+<!--                            <li>-->
+                                <a href="#" class="w3pvt_dribble editContent" >
+                                    <span class="fa fa-dribbble" ></span>
+                                </a>
+<!--                            </li>-->
+<!--                            <li>-->
+                                <a href="#" class="w3pvt_google editContent" >
+                                    <span class="fa fa-google-plus" ></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-8 footer-right">
+                        <div class="row mt-lg-4 bottom-w3layouts-sec-nav mx-0">
+                            <div class="col-md-4 footer-grid_section_w3layouts">
+                                <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3" ><font size="6" color="LemonChiffon">Разделы</font></h3>
+                                <ul class="list-unstyled w3layouts-icons">
+                                    <li>
+                                        <a href="../posts/" class="editContent" >Главная</a>
+                                    </li>
+                                    <li>
+                                        <a href="../contact/" class="editContent" >Контакты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 footer-grid_section_w3layouts my-md-0 my-5">
+                                <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3 editContent"><font size="6" color="LemonChiffon">Поддержка</font></h3>
+                                <div class="contact-info">
+                                    <div class="footer-address-inf my-4">
+                                        <h6 class="editContent" ><font size="4" color="LemonChiffon">Email: </font><a href="mailto:info@example.com">info@example.com</a></h6>
+                                    </div>
+                                    <div class="footer-address-inf">
+                                        <h6 class="ad-info mb-2 editContent" style="color: LemonChiffon">Часовой пояс: Москва</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- //footer -->
+        <div class="cpy-right py-3">
+            <div class="container">
+                <div class="row">
+                    <p class="col-md-10 text-left">© 2023 ФСТР. All rights reserved | Design by
+                    </p>
+                    <!-- move top icon -->
+                    <a href="#home" class="move-top text-right col-md-2"><span class="fa fa-long-arrow-up" aria-hidden="true" ></span></a>
+                    <!-- //move top icon -->
+                </div>
+            </div>
+        </div></div>
+    </body>
+</html>
+

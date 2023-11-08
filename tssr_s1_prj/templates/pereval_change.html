@@ -1,0 +1,46 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+
+{% block content %}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Редактирование данных </font></a></b>
+    <hr>
+<!--    <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem; background-image: url(&quot;../media/images/s2.jpg&quot;);">-->
+    <form action="" method="post" enctype="multipart/form-data">
+        {% if form.status %}
+            {% csrf_token %}
+            <font size="5" color="LemonChiffon" >Дата предоставления данных: {{ form.add_time }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Почта: {{ form.author }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Данные предоставил: {{ form.users }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Наименование объекта:  {{ form.beauty_title }} {{ form.title }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Другие наименования: {{ form.other_titles }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Что соединяет:  {{ form.connect }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Координаты:</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">широта - {{ form.coords__get_latitude }}</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">долгота - {{ form.coords_longitude }}</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">высота - {{ form.coords }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Уровень сложности:</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">зимой - {{ form.level_winter }}</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">летом - {{ form.level_summer }}</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">осенью - {{ form.level_autumn }}</font>
+            <br><br>
+            <font size="4" color="LemonChiffon">весной - {{ form.level_spring }}</font>
+            <br><br>
+            <font size="5" color="LemonChiffon">Статус: {{ form.status }}</font>
+            <br><br>
+            <button type="submit" class="btn btn-success">Принять изменения</button><br>
+        {% endif %}
+    </form>
+{% endblock content %}

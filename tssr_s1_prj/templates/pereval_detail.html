@@ -1,0 +1,64 @@
+{% extends 'flatpages/default.html' %}
+
+{% load static %}
+
+ будет Post -->
+{% block title %}
+PerevalAdded
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам пост, идентификатор которого был передан в url -->
+{% block content %}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Информация об объекте </font></a></b>
+    <br>
+    <font size="5" color="LemonChiffon" >Дата предоставления данных:</font>
+    <font size="5" color="PaleGreen" >{{ pereval_detail.add_time }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Данные предоставил: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.users }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Почта: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.users.user_email }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Номер телефона: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.users.user_phone }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Наименование объекта: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.beauty_title }} {{ pereval_detail.title }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Другие наименования: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.other_titles }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Что соединяет: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.connect }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Координаты:</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  широта: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.coords.latitude }}</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  долгота: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.coords.longitude }}</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  высота: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.coords.height }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Уровень сложности:</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  зимой: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.level_winter }}</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  летом: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.level_summer }}</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  осенью: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.level_autumn }}</font>
+    <br><br>
+    <font size="4" color="LemonChiffon"> -  весной: </font>
+    <font size="4" color="PaleGreen">{{ pereval_detail.level_spring }}</font>
+    <br><br>
+    <font size="5" color="LemonChiffon">Статус: </font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.obj_status }}</font>
+    <font size="5" color="PaleGreen">{{ pereval_detail.statusobjects.perevaladded.statuslist_name }}</font>
+
+{% endblock content %}

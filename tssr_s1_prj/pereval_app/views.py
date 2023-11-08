@@ -1,9 +1,12 @@
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView, UpdateView, ListView
 import json
 from django.http import JsonResponse
 from django.views import View
+
+from .forms import PerevalAddedForm
 from .models import PerevalAdded, PerevalImages, Authors, StatusList, Coords
 
 
@@ -132,3 +135,45 @@ class SubmitData(View):
 
     def post(self, request):
         return submit_data(request)
+
+class PerevalAddedList(ListView):
+    model = PerevalAdded             # Указываем модель, объекты которой мы будем выводить
+    ordering = '-add_time'           # Поле, которое будет использоваться для сортировки объектов
+    template_name = 'pereval.html'   # Указываем имя шаблона, в котором будут все инструкции о том,
+                                     # как именно пользователю должны быть показаны наши объекты
+    context_object_name = 'pereval'  # Это имя списка, в котором будут лежать все объекты.
+                                     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
+
+class PerevalAddedDetail(DetailView):
+    form_class = PerevalAddedForm
+    model = PerevalAdded
+    template_name = 'pereval_detail.html'
+    context_object_name = 'pereval_detail'  # Название объекта, в котором будет выбранный пользователем пост
+    success_url = '../object/'
+
+    """ sprint 2 - get """
+    def post(self, request, *args, **kwargs):
+        form = PerevalAddedForm()
+        form_obj = form.instance
+        form_author = Authors()
+        form_coords = Coords()
+
+        pa = PerevalAdded.objects.get(pk=kwargs.get('pk'))
+        au = Authors.objects.filter.get(pk=request.GET.get['users_id'])
+
+        # print('!!!!!! request :::::', request)
+        # print('!!!!!! pk :::::', kwargs.get('pk'))
+        return render(request, 'pereval_detail.html', {'form': form, 'form_obj': form_obj, 'pa': pa, 'au': au})
+
+    """ sprint 2 """
+    def patch(self, request, *args, **kwargs):
+        pass
+
+class PerevalAddedUpdate(UpdateView):
+    form_class = PerevalAddedForm
+    model = PerevalAdded
+    template_name = 'pereval_change.html'
+    success_url = '../pereval_change/'
+
+    # def get(self, request, pk):
+    #     pass

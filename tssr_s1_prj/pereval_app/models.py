@@ -1,13 +1,18 @@
 from datetime import datetime
 from django.db import models
+from django.db.models import OneToOneField
 
 """ пользователи - авторы сообщений о географических объектах """
 class Authors(models.Model):
     user_fam = models.CharField('Фамилия', max_length=100, default='')   # - пользователь - фамилия
     user_name = models.CharField('Имя', max_length=100, default='')      # - пользователь - имя
     user_otc = models.CharField('Отчество', max_length=100, default='')  # - пользователь - отчество
+    user_fullname = models.CharField('ФИО', max_length=200, default='')  # - пользователь - ФИО строкой
     user_phone = models.CharField('Тел.', max_length=20, default='')     # - пользователь - номер телефона
     user_email = models.CharField('Почта', max_length=50, unique=True, default='')   # - пользователь - почта
+
+    def __str__(self):
+        return self.user_fullname
 
 """ справочник географических объектов """
 class PerevalAreas(models.Model):
@@ -22,6 +27,9 @@ class StatusList(models.Model):
          3 - rejected — модерация прошла, информация не принята. """
     parent = models.IntegerField()
     name = models.CharField('Наименование', unique=True, max_length=50)  # - наименование объекта
+
+    def __str__(self):
+        return self.name
 
 """  координаты гео-объекта """
 class Coords(models.Model):
@@ -47,12 +55,13 @@ class PerevalAdded(models.Model):
     level_summer = models.CharField('лето', max_length=10, default='')         # - категория трудности - летом
     level_autumn = models.CharField('осень', max_length=10, default='')        # - категория трудности - осенью
     level_spring = models.CharField('весна', max_length=10, default='')        # - категория трудности - весной
-    status = models.ManyToManyField(StatusList, through='StatusObjects')    # - статус информации
+    # obj_status = models.ManyToManyField(StatusList, through='StatusObjects')   # - статус информации
+    obj_status = models.ForeignKey(StatusList, on_delete=models.CASCADE, default=0)
 
-""" Промежуточная таблица связей гео-объектов и статусов записе о них """
-class StatusObjects(models.Model):
-    so_object = models.ForeignKey(PerevalAdded, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью GeoObjects;
-    so_status = models.ForeignKey(StatusList, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью StatusInfo;
+# """ Промежуточная таблица связей гео-объектов и статусов записе о них """
+# class StatusObjects(models.Model):
+#     so_object = models.ForeignKey(PerevalAdded, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью GeoObjects;
+#     so_status = models.ForeignKey(StatusList, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью StatusInfo;
 
 """ фотографии гео-объекта """
 class PerevalImages(models.Model):
