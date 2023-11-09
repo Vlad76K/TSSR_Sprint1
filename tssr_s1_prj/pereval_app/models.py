@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.db import models
-from django.db.models import OneToOneField
 
 """ пользователи - авторы сообщений о географических объектах """
 class Authors(models.Model):
@@ -55,13 +54,7 @@ class PerevalAdded(models.Model):
     level_summer = models.CharField('лето', max_length=10, default='')         # - категория трудности - летом
     level_autumn = models.CharField('осень', max_length=10, default='')        # - категория трудности - осенью
     level_spring = models.CharField('весна', max_length=10, default='')        # - категория трудности - весной
-    # obj_status = models.ManyToManyField(StatusList, through='StatusObjects')   # - статус информации
     obj_status = models.ForeignKey(StatusList, on_delete=models.CASCADE, default=0)
-
-# """ Промежуточная таблица связей гео-объектов и статусов записе о них """
-# class StatusObjects(models.Model):
-#     so_object = models.ForeignKey(PerevalAdded, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью GeoObjects;
-#     so_status = models.ForeignKey(StatusList, on_delete=models.CASCADE)  # - связь «один ко многим» с моделью StatusInfo;
 
 """ фотографии гео-объекта """
 class PerevalImages(models.Model):

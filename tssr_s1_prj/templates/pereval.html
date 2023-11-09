@@ -11,9 +11,7 @@ PerevalAdded
     <form action="" method="post">
         {% csrf_token %}
 
-        <a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="7" color="LightSkyBlue"> Наши объявления </font></a>
-        <!-- Если в переменной next_sale будет None, то выведется указанный в фильтре текст -->
-        <h5><span style = "color: LemonChiffon">{{ next_action|default_if_none:"Чуть позже сообщим о новой акции!" }}</span></h5>
+        <a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="7" color="LightSkyBlue"> Наши объекты </font></a>
         <br>
 
         {% if pereval %}
@@ -24,7 +22,9 @@ PerevalAdded
                 <!-- Выводим автора и дату публикации -->
                 <em><font color="LemonChiffon">Автор: {{ serv.users }}  ...  Дата публикации: {{ serv.add_time }}</font></em>
 <!--                <font size="4" color="LemonChiffon">{{ serv.post_text }}</font>-->
-                <a href="../pereval_change/{{serv.id}}"><font size="3" color="white">Редактировать</font></a>
+                {% if serv.obj_status_id == 0 %}
+                    <a href="../pereval_change/{{serv.id}}"><font size="3" color="white">Редактировать</font></a>
+                {% endif %}
                 <br><br>
             {% endfor %}
         {% else %}

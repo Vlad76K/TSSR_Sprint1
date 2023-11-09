@@ -5,9 +5,13 @@ from django.views.generic import TemplateView, DetailView, UpdateView, ListView
 import json
 from django.http import JsonResponse
 from django.views import View
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .forms import PerevalAddedForm
 from .models import PerevalAdded, PerevalImages, Authors, StatusList, Coords
+from .serializers import PerevalSerializer
 
 
 def submit_data(request):
@@ -31,10 +35,12 @@ def submit_data(request):
             user_name = data['user']['name']
             user_otc = data['user']['otc']
             user_phone = data['user']['phone']
+            user_fullname = str(user_fam + ' ' + user_name + ' ' + user_otc)
             user_data = {
                 'user_fam': user_fam,
                 'user_name': user_name,
                 'user_otc': user_otc,
+                'user_fullname': user_fullname,
                 'user_phone': user_phone,
                 'user_email': user_email,
             }
@@ -63,6 +69,8 @@ def submit_data(request):
         level_winter = data['level']['winter']
         image_data = data['images']
 
+        geo_status = StatusList.objects.get(pk=0)
+
         geo_data = {
             'add_time': add_time,
             'beauty_title': beauty_title,
@@ -75,11 +83,9 @@ def submit_data(request):
             'level_winter': level_winter,
             'users': user_item,
             'coords': coords_item,
+            'obj_status': geo_status,
         }
         geo_item = PerevalAdded.objects.create(**geo_data)
-
-        geo_status = StatusList.objects.filter(pk=0)
-        geo_item.status.add(*geo_status)
 
         """ Добавим информацию о фотографиях """
         for imd in image_data:
@@ -96,9 +102,9 @@ def submit_data(request):
     except AttributeError as err:  # 400 — Bad Request (при нехватке полей);
         data = {"message": f"Отсутствуют поля:{err}"}
         return JsonResponse(data, status=400)
-    except:  # 500 — ошибка при выполнении операции;
-        data = {"message": f"Ошибка при выполнении операции!"}
-        return JsonResponse(data, status=500)
+    # except:  # 500 — ошибка при выполнении операции;
+    #     data = {"message": f"Ошибка при выполнении операции!"}
+    #     return JsonResponse(data, status=500)
 
 class APICheckView(TemplateView):
     api_data = {}
@@ -129,10 +135,13 @@ class APICheckView(TemplateView):
 
         return context
 
-# Create your views here.
-@method_decorator(csrf_exempt, name='dispatch')
-class SubmitData(View):
+# @method_decorator(csrf_exempt, name='dispatch')
+# class SubmitData(View):
+#     def post(self, request):
+#         return submit_data(request)
 
+@method_decorator(csrf_exempt, name='dispatch')
+class SubmitData(APIView):
     def post(self, request):
         return submit_data(request)
 
@@ -151,28 +160,30 @@ class PerevalAddedDetail(DetailView):
     context_object_name = 'pereval_detail'  # Название объекта, в котором будет выбранный пользователем пост
     success_url = '../object/'
 
+
+class PerevalAddedAPIView(APIView):
+    def get_object(self, pk, HTTP404=None):
+        try:
+            return PerevalAdded.objects.get(pk=pk)
+        except PerevalAdded.DoesNotExist:
+            raise HTTP404
+
     """ sprint 2 - get """
-    def post(self, request, *args, **kwargs):
-        form = PerevalAddedForm()
-        form_obj = form.instance
-        form_author = Authors()
-        form_coords = Coords()
-
-        pa = PerevalAdded.objects.get(pk=kwargs.get('pk'))
-        au = Authors.objects.filter.get(pk=request.GET.get['users_id'])
-
-        # print('!!!!!! request :::::', request)
-        # print('!!!!!! pk :::::', kwargs.get('pk'))
-        return render(request, 'pereval_detail.html', {'form': form, 'form_obj': form_obj, 'pa': pa, 'au': au})
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object(kwargs.get('pk'))
+        serializer = PerevalSerializer(snippet)
+        return Response(serializer.data)
 
     """ sprint 2 """
-    def patch(self, request, *args, **kwargs):
-        pass
+    # def patch(self, request, *args, **kwargs):
+    #     pass
 
 class PerevalAddedUpdate(UpdateView):
     form_class = PerevalAddedForm
     model = PerevalAdded
+    model_coords = Coords
     template_name = 'pereval_change.html'
+    context_object_name = 'pereval_change'  # Название объекта, в котором будет выбранный пользователем объект
     success_url = '../pereval_change/'
 
     # def get(self, request, pk):

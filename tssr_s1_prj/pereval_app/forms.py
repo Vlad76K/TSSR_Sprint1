@@ -1,10 +1,13 @@
 from django import forms
-from .models import PerevalAdded
+from .models import PerevalAdded, Coords
+
 
 class PerevalAddedForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PerevalAddedForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
+        # coords = Coords.objects.filter(pk=instance.id)
+        # print('id = ', instance.id)  #coords.get('latitude'))
         if instance and instance.id:
             self.fields['add_time'].required = False
             self.fields['add_time'].widget.attrs['disabled'] = 'disabled'
