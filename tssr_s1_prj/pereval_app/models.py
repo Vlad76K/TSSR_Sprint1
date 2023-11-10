@@ -18,6 +18,9 @@ class PerevalAreas(models.Model):
     id_parent = models.IntegerField()
     title = models.CharField('Наименование', max_length=100)  # - наименование объекта
 
+    def __str__(self):
+        return self.title
+
 """ статусная модель """
 class StatusList(models.Model):
     """  0 - new;
@@ -56,9 +59,15 @@ class PerevalAdded(models.Model):
     level_spring = models.CharField('весна', max_length=10, default='')        # - категория трудности - весной
     obj_status = models.ForeignKey(StatusList, on_delete=models.CASCADE, default=0)
 
+    def __str__(self):
+        return self.title
+
 """ фотографии гео-объекта """
 class PerevalImages(models.Model):
     image_go = models.ForeignKey(PerevalAdded, on_delete=models.CASCADE)
     # image_data = models.ImageField(verbose_name='Картинка', upload_to='images', height_field=100, width_field=100)
     image_data = models.CharField('Картинка', max_length=1024)     # картинка
     image_title = models.CharField('Заголовок', max_length=200)  # наименование картинки
+
+    def __str__(self):
+        return self.image_title
