@@ -31,3 +31,10 @@ class PerevalSerializer(serializers.ModelSerializer):
     class Meta:
         model = PerevalAdded
         fields = '__all__'
+
+class PerevalSerializerPatch(serializers.ModelSerializer):
+    coords = CoordsSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = PerevalAdded
+        fields = '__all__'
