@@ -14,9 +14,4 @@ urlpatterns = [
     path('get-status/submitData/<int:pk>', PerevalStatusGetAPIView.as_view()),
     path('get-coords/submitData/<int:pk>', PerevalCoordsGetAPIView.as_view()),
     path('get-useremail/submitData/', GetObjectsListByUserEmail.as_view()),
-    # path('get-useremail/submitData/<str:email>', GetObjectsListByUserEmail.as_view()),
-
-    # path('object/<int:pk>', PerevalAddedDetail.as_view(), name='pereval_detail'),
-    # path('pereval_change/<int:pk>', PerevalAddedUpdate.as_view(), name='pereval_change'),
-    # path('pereval/', PerevalAddedList.as_view(), name='pereval'),
 ]

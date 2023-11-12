@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView, UpdateView, ListView
 from rest_framework import status, generics
 from rest_framework.response import Response
+from rest_framework.utils import json
 from rest_framework.views import APIView
 
 from .models import PerevalAdded, PerevalImages, Authors, StatusList, Coords
@@ -58,6 +59,14 @@ class APICheckView(TemplateView):
 class SubmitData(APIView):
     def post(self, request):
         serializer = PerevalSerializer(data=request.data)
+
+        data = json.loads(request.body.decode("utf-8"))
+        api_check = APICheckView()
+        api_check.api_data = data
+        its_right = api_check.check_json()
+        if len(its_right.get('missing_keys')) > 0:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
