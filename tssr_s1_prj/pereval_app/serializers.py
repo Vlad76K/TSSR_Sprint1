@@ -32,6 +32,15 @@ class PerevalSerializer(serializers.ModelSerializer):
         model = PerevalAdded
         fields = '__all__'
 
+class PerevalSerializerPost(serializers.ModelSerializer):
+    coords = CoordsSerializer(read_only=True, many=False)
+    users = UsersSerializer(read_only=False, many=False)
+    obj_status = StatusSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = PerevalAdded
+        fields = '__all__'
+
 class PerevalSerializerPatch(serializers.ModelSerializer):
     coords = CoordsSerializer(read_only=True, many=False)
 
